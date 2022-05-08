@@ -1,15 +1,35 @@
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//        maven { url("https://plugins.gradle.org/m2/") }
+//    }
+//    dependencies {
+//        classpath 'com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:4.28.0'
+//    }
+//}
+
 plugins {
+    id 'java'
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id "com.jfrog.artifactory" version "4.28.0"
 }
 
 group 'leon.patmore'
 version '1.0-SNAPSHOT'
 
+repositories {
+    maven { url("https://plugins.gradle.org/m2/") }
+}
+
+dependencies {
+    implementation 'com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:4.28.0'
+}
+
 gradlePlugin {
     plugins {
         projectInfo {
-            id = "leon.patmore.advanced-artifactory-plugin"
+            id = "leon.patmore.AdvancedArtifactoryPlugin"
             implementationClass  = "leon.patmore.AdvancedArtifactoryPlugin"
         }
     }

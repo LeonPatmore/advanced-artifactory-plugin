@@ -7,7 +7,8 @@ public class AdvancedArtifactoryPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        System.out.println("Hi");
+        AdvancedArtifactoryProject artifactoryProject = new AdvancedArtifactoryProject(project);
+        artifactoryProject.init();
     }
 
 }

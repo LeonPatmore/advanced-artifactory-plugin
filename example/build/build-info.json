@@ -1,0 +1,48 @@
+{
+  "version" : "1.0.1",
+  "name" : "example",
+  "number" : "1652031399266",
+  "buildAgent" : {
+    "name" : "Gradle",
+    "version" : "7.1.1"
+  },
+  "agent" : {
+    "name" : "Gradle",
+    "version" : "7.1.1"
+  },
+  "started" : "2022-05-08T18:36:39.226+0100",
+  "durationMillis" : 548,
+  "principal" : "Leon",
+  "artifactoryPrincipal" : "team_chatapp-publisher",
+  "artifactoryPluginVersion" : "Unknown",
+  "vcs" : [ ],
+  "modules" : [ {
+    "type" : "gradle",
+    "id" : "org.example:example:20220508.183639_undef_undef",
+    "repository" : "libs-release-local",
+    "artifacts" : [ {
+      "type" : "jar",
+      "sha1" : "790ad39fb74732e083f1fb2fd25f1f9007a8a482",
+      "sha256" : "7a9f9e0e786ec5840f7e28ae17ba4c65fd5565316450f81e40df49275b63f5c6",
+      "md5" : "4dcf8ecf8b45b8420a3ea95e03f98031",
+      "name" : "example-20220508.183639_undef_undef.jar",
+      "path" : "org/example/example/20220508.183639_undef_undef/example-20220508.183639_undef_undef.jar"
+    }, {
+      "type" : "module",
+      "sha1" : "bf9d37828ed1bcb259d34f542c43694fbb61cfe6",
+      "sha256" : "b552cb9ef695435f50afd62ebd7086d5ccbfd0ef38f7fe2b34ca4f980d99e985",
+      "md5" : "bb472a15c1072e32410c126b0c1c9b17",
+      "name" : "example-20220508.183639_undef_undef.module",
+      "path" : "org/example/example/20220508.183639_undef_undef/example-20220508.183639_undef_undef.module"
+    }, {
+      "type" : "pom",
+      "sha1" : "984097e50a2e443b9856275d8b21229cc68e58e3",
+      "sha256" : "e68ac925405e6e9e6272a35790b08254268fe80883f829bb8658503ecd64989a",
+      "md5" : "f3e99e860b7cbbf7d61927b113543d4c",
+      "name" : "example-20220508.183639_undef_undef.pom",
+      "path" : "org/example/example/20220508.183639_undef_undef/example-20220508.183639_undef_undef.pom"
+    } ],
+    "excludedArtifacts" : [ ],
+    "dependencies" : [ ]
+  } ]
+}
