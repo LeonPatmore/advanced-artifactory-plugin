@@ -1,2 +1,11 @@
-rootProject.name = 'example'
+pluginManagement {
+    repositories {
+        maven { url("https://plugins.gradle.org/m2/") }
+        maven {
+            url = "http://localhost:8080/artifactory/libs-snapshot-local/"
+            allowInsecureProtocol = true
+        }
+    }
+}
 
+rootProject.name = 'example'

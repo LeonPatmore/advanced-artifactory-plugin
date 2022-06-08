@@ -1,17 +1,34 @@
-buildscript {
-    dependencies {
-        classpath files('../advanced-artifactory-plugin/build/libs/advanced-artifactory-plugin-1.0-SNAPSHOT.jar')
-    }
-}
-
 plugins {
     id 'java'
-    id "com.jfrog.artifactory" version "4.28.0"
+    id 'java-library'
+    id 'leon.patmore.AdvancedArtifactoryPlugin' version "1.3-SNAPSHOT"
 }
+
+group 'org.example'
 
 apply plugin: "leon.patmore.AdvancedArtifactoryPlugin"
 
-group 'org.example'
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            from project.components.java
+//        }
+//    }
+//}
+
+//artifactory {
+//    contextUrl = "http://localhost:8080/artifactory"
+//    publish {
+//        repository {
+//            repoKey = 'libs-release-local'
+//            username = 'admin'
+//            password = 'password'
+//        }
+//        defaults {
+//            publications('ALL_PUBLICATIONS')
+//        }
+//    }
+//}
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

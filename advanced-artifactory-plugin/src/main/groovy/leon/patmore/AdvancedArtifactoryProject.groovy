@@ -1,7 +1,12 @@
 package leon.patmore
 
 import org.gradle.api.Project
+import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
+import org.jfrog.gradle.plugin.artifactory.ArtifactoryPluginUtil
+import org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention
+import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
+import org.jfrog.gradle.plugin.artifactory.extractor.GradleArtifactoryClientConfigUpdater
 import org.slf4j.Logger
 
 import java.text.SimpleDateFormat
@@ -36,37 +41,72 @@ class AdvancedArtifactoryProject {
     }
 
     private void setupArtifactoryRepo() {
-        project.publishing {
-            publications {
-                mavenJava(MavenPublication) {
-                    from project.components.java
-                }
-            }
-        }
+        String artifactoryUsername = getExpectedEnvVar("ARTIFACTORY_USERNAME")
+        String artifactoryPassword = getExpectedEnvVar("ARTIFACTORY_PASSWORD")
+//        project.publishing {
+//            publications {
+//                mavenJava(MavenPublication) {
+//                    from project.components.java
+//                }
+//            }
+//        }
+//        project.artifactory {
+//            contextUrl = getExpectedEnvVar("ARTIFACTORY_URL")
+//            publish {
+//                repository {
+//                    username = artifactoryUsername
+//                    password = artifactoryPassword
+//                    repoKey = getExpectedEnvVar("ARTIFACTORY_REPO_KEY")
+//                }
+//            }
+//        }
 
+        project.getExtensions().configure(PublishingExtension.class, publishingExtension -> {
+            publishingExtension.publications(publications -> {
+                publications.create("mavenPublication", MavenPublication.class, mavenPublication -> {
+                    mavenPublication.from(project.getComponents().findByName("java"));
+                });
+            });
+        });
 
-        project.artifactory {
-            contextUrl = getExpectedEnvVar("ARTIFACTORY_URL")
-            publish {
-                repository {
-                    username = getExpectedEnvVar("ARTIFACTORY_USERNAME")
-                    password = getExpectedEnvVar("ARTIFACTORY_PASSWORD")
-                    repoKey = getExpectedEnvVar("ARTIFACTORY_REPO_KEY")
-                }
-                defaults {
-                    publications('mavenJava')
-                    publishArtifacts = true
-                }
-            }
-        }
+        project.getPluginManager().withPlugin("com.jfrog.artifactory", appliedPlugin -> {
+            // artifactory {
+            ArtifactoryPluginConvention pluginConvention = ArtifactoryPluginUtil.getArtifactoryConvention(project);
+            //    contextUrl = "${contextUrl}"
+            pluginConvention.setContextUrl(getExpectedEnvVar("ARTIFACTORY_URL"));
+            //    publish {
+            PublisherConfig publisherConfig = new PublisherConfig(pluginConvention);
+            pluginConvention.setPublisherConfig(publisherConfig);
+            //      repository {
+            pluginConvention.getPublisherConfig().repository(repository -> {
+                //      repoKey =  'default-gradle-dev-local'  ...
+                repository.setRepoKey(getExpectedEnvVar("ARTIFACTORY_REPO_KEY")); // The Artifactory repository key to publish to
+                repository.setUsername(artifactoryUsername); // The publisher user name
+                repository.setPassword(artifactoryPassword); // The publisher password
+                repository.setMavenCompatible(true);
+            });
+            //      defaults {
+            pluginConvention.getPublisherConfig().defaults(artifactoryTask -> {
+                //      publications('mavenJava')
+                artifactoryTask.publications("mavenPublication");
+                artifactoryTask.setPublishArtifacts("true");
+                artifactoryTask.setPublishPom("true");
+            });
 
+            GradleArtifactoryClientConfigUpdater.update(pluginConvention.clientConfig, project.rootProject)
+
+        });
     }
 
     private void applyArtifactoryPlugins() {
         project.apply plugin: 'java'
         project.apply plugin: 'java-library'
-        project.apply plugin: 'maven-publish'
-        project.apply plugin: 'com.jfrog.artifactory'
+//        project.apply plugin: 'maven-publish'
+//        project.apply plugin: 'com.jfrog.artifactory'
+
+        project.rootProject.pluginManager.apply "maven-publish"
+        project.pluginManager.apply "maven-publish"
+        project.plugins.apply "com.jfrog.artifactory"
     }
 
     private String getVersion() {
@@ -88,6 +128,7 @@ class AdvancedArtifactoryProject {
             logger.warn("Expected env var {} is not present!", name)
             return defaultValue
         }
+        logger.info("Got env var {} for {}", val, name)
         return val
     }
 
