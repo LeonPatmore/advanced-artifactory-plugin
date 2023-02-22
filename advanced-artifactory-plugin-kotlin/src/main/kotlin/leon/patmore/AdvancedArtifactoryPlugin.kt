@@ -6,7 +6,9 @@ import org.gradle.api.Project
 class AdvancedArtifactoryPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        TODO("Not yet implemented")
+        target.repositories.mavenCentral()
+        target.pluginManager.apply("maven-publish")
+        target.pluginManager.apply("com.jfrog.artifactory")
     }
 
 }
