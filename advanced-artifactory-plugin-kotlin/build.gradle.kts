@@ -1,4 +1,3 @@
-import groovy.lang.GroovyObject
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 
 plugins {
@@ -17,7 +16,7 @@ group = "leon.patmore"
 version = "1.0.0-SNAPSHOT"
 
 dependencies {
-    runtimeOnly("com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:4.31.4")
+    implementation("com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:4.31.4")
 }
 
 gradlePlugin {
