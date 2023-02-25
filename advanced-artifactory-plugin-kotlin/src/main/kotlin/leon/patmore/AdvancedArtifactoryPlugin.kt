@@ -25,7 +25,7 @@ class AdvancedArtifactoryPlugin : Plugin<Project> {
         }
 
         val artifactory = target.convention.findPlugin(ArtifactoryPluginConvention::class.java)
-        artifactory!!.setContextUrl("http://localhost:8080/artifactory")
+        artifactory!!.setContextUrl(getExpectedEnvVar(target, "ARTIFACTORY_URL"))
 
         artifactory.publish {
             val config = PublisherConfig(artifactory)
@@ -41,6 +41,17 @@ class AdvancedArtifactoryPlugin : Plugin<Project> {
         val task = target.tasks.getByName("artifactoryPublish") as ArtifactoryTask
         val java = publishing.publications.getByName("mavenJava") as MavenPublication
         task.mavenPublications.add(java)
+        task.publications("mavenJava")
+    }
+
+    private fun getExpectedEnvVar(project: Project, name: String, defaultValue: String = "") : String{
+        val value = System.getenv(name)
+        if (value == null) {
+            project.logger.warn("Expected env var {} is not present!", name)
+            return defaultValue
+        }
+        project.logger.info("Got env var $value for $name")
+        return value
     }
 
 }
