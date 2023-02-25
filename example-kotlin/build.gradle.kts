@@ -3,4 +3,4 @@ plugins {
 }
 
 group = "leon.patmore"
-version = "1.0.1"
+version = "1.0.2"
