@@ -1,7 +1,7 @@
 # Plugins
 
-- [Advanced artifactory plugin](advanced-artifactory-plugin/README.md)
-- [Git Versioning Plugin](git-versioning-plugin/README.md)
+- [Advanced Artifactory Plugin](advanced-artifactory-plugin)
+- [Git Versioning Plugin](git-versioning-plugin)
 
 ## Usage
 
