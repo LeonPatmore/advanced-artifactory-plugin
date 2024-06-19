@@ -9,5 +9,5 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation("com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:4.31.4")
+    implementation("com.jfrog.artifactory:com.jfrog.artifactory.gradle.plugin:5.2.0")
 }

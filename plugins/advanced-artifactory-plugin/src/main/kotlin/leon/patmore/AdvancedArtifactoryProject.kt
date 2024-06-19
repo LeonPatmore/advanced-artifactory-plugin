@@ -4,7 +4,6 @@ import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention
-import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 import org.jfrog.gradle.plugin.artifactory.task.ArtifactoryTask
 
 class AdvancedArtifactoryProject(private val project: Project) {
@@ -34,22 +33,23 @@ class AdvancedArtifactoryProject(private val project: Project) {
         publishing.publications {
             it.create("mavenJava", MavenPublication::class.java) { publication ->
                 (publication as MavenPublication).from(project.components.findByName("java"))
+                publication.groupId = project.extensions.extraProperties.get("groupId") as String
+                publication.artifactId = project.extensions.extraProperties.get("artifactId") as String
             }
         }
     }
 
     private fun configureArtifactoryPlugin() {
-        val artifactory = project.convention.findPlugin(ArtifactoryPluginConvention::class.java)
-        artifactory!!.setContextUrl(getExpectedEnvVar("ARTIFACTORY_URL"))
+        val artifactory = project.extensions.getByType(ArtifactoryPluginConvention::class.java)
+            ?: throw RuntimeException("Failed to find artifactory plugin!")
+        artifactory.setContextUrl(getExpectedEnvVar("ARTIFACTORY_URL"))
 
         artifactory.publish {
-            val config = PublisherConfig(artifactory)
-            config.setPublishPom(true)
-            config.setPublishIvy(true)
-            config.repository {
-                it.setRepoKey(getExpectedEnvVar("ARTIFACTORY_REPO_KEY"))
-                it.setUsername(getExpectedEnvVar("ARTIFACTORY_USERNAME"))
-                it.setPassword(getExpectedEnvVar("ARTIFACTORY_PASSWORD"))
+            it.isPublishBuildInfo = true
+            it.repository { repo ->
+                repo.repoKey = getExpectedEnvVar("ARTIFACTORY_REPO_KEY")
+                repo.username = getExpectedEnvVar("ARTIFACTORY_USERNAME")
+                repo.password = getExpectedEnvVar("ARTIFACTORY_PASSWORD")
             }
         }
 

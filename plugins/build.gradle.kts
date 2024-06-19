@@ -1,13 +1,15 @@
-import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
-
 plugins {
-    kotlin("jvm") version "1.8.10"
-    id("com.jfrog.artifactory") version "4.31.4"
+    kotlin("jvm") version "2.0.0"
+    id("com.jfrog.artifactory") version "5.2.2"
+}
+
+repositories {
+    mavenCentral()
 }
 
 subprojects {
     group = "leon.patmore"
-    version = "1.0.0-SNAPSHOT"
+    version = "2.0.3-SNAPSHOT"
 
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "java-gradle-plugin")
@@ -21,15 +23,15 @@ subprojects {
 
     artifactory {
         setContextUrl("http://localhost:8080/artifactory")
-        publish(delegateClosureOf<PublisherConfig> {
+        publish {
             repository {
-                setRepoKey("libs-snapshot-local")
-                setUsername("admin")
-                setPassword("password")
+                repoKey = "libs-snapshot-local"
+                username = "admin"
+                password = "password"
             }
             defaults {
                 publications("ALL_PUBLICATIONS")
             }
-        })
+        }
     }
 }

@@ -14,3 +14,7 @@ To set up a local artifactory instance:
 To push the plugins to this instance:
 
 `make publish`
+
+### UI
+
+http://localhost:8080/artifactory/webapp/home.html

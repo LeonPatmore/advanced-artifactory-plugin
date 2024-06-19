@@ -7,6 +7,15 @@ A gradle Plugin to make pushing to artifactory easier! The plugin configures eve
 - `ARTIFACTORY_PASSWORD`
 - `ARTIFACTORY_REPO_KEY`
 
+You also need to set group id and artifact id in your project, like this:
+
+```kotlin
+buildscript {
+    project.extra.set("groupId", "leon.patmore")
+    project.extra.set("artifactId", "myname")
+}
+```
+
 ## Resources
 
 - https://github.com/cortinico/kotlin-gradle-plugin-template

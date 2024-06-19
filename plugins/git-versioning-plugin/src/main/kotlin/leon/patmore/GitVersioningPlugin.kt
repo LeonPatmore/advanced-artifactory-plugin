@@ -1,6 +1,5 @@
 package leon.patmore
 
-import org.ajoberstar.grgit.gradle.GrgitService
 import org.ajoberstar.grgit.gradle.GrgitServiceExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
