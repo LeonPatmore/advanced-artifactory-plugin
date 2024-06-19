@@ -1,4 +1,4 @@
-## Advanced Artifactory Plugin
+# Advanced Artifactory Plugin
 
 A gradle Plugin to make pushing to artifactory easier! The plugin configures everything you need to push, you just need to set the following env vars:
 

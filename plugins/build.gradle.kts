@@ -9,7 +9,7 @@ repositories {
 
 subprojects {
     group = "leon.patmore"
-    version = "2.0.3-SNAPSHOT"
+    version = "2.0.4-SNAPSHOT"
 
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "java-gradle-plugin")

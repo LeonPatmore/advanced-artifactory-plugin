@@ -2,6 +2,7 @@
 
 - [Advanced Artifactory Plugin](advanced-artifactory-plugin)
 - [Git Versioning Plugin](git-versioning-plugin)
+- [Advanced Spring Boot Service Plugin](advanced-spring-boot-service-plugin)
 
 ## Usage
 

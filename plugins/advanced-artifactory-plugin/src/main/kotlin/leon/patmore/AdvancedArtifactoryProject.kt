@@ -1,6 +1,7 @@
 package leon.patmore
 
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention
@@ -14,7 +15,14 @@ class AdvancedArtifactoryProject(private val project: Project) {
         setRepositories()
         applyPlugins()
         setJavaPublication()
+        configureJavaExtension()
         configureArtifactoryPlugin()
+    }
+
+    private fun configureJavaExtension() {
+        val javaExtension = project.extensions.getByType(JavaPluginExtension::class.java)
+        javaExtension.withJavadocJar()
+        javaExtension.withSourcesJar()
     }
 
     private fun setRepositories(){
